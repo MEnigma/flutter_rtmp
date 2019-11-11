@@ -39,7 +39,7 @@ class RtmpView(context: Context?) : PlatformView {
             _manager = null
         }
     }
-p
+
     override fun getView(): View {
         if (_manager == null) {
             _manager = RtmpManager(_context)
