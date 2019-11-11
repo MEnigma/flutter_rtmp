@@ -1,14 +1,38 @@
 # flutter_rtmp
 
-A rtmp plugin
 
-## Getting Started
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+## 使用方法
+### 引入
+#### 1.第一种方法
+    flutter_rtmp:
+       git: https://github.com/MEnigma/flutter_rtmp.git
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+#### 2.第二种
+    flutter_rtmp: ^*.*.*
+
+
+>示例
+>   ```
+>    /// 控制器
+>    void initState() {
+>        super.initState();
+>        _manager = RtmpManager(onCreated: () {
+>            print("--- view did created ---");
+>        });
+>    }
+>
+>    /// 视图
+>   Widget build(BuildContext context) {
+>
+>      return RtmpView(
+>            manager: _manager,
+>       );
+>   }
+>   ```
+    
+### 引用
+
+>*   iOS 使用[LFLiveKit](https://github.com/LaiFengiOS/LFLiveKit)
+>*   android中使用[libWSLive](https://github.com/geeklx/myapplication2018/tree/master/p004_livedemo)
+
