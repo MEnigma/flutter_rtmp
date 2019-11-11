@@ -36,3 +36,8 @@
 >*   iOS 使用[LFLiveKit](https://github.com/LaiFengiOS/LFLiveKit)
 >*   android中使用[libWSLive](https://github.com/geeklx/myapplication2018/tree/master/p004_livedemo)
 
+# [LICENSE](https://github.com/MEnigma/flutter_rtmp/blob/master/LICENSE)
+
+* 参与者
+>* mark < https://github.com/MEnigma >
+>* youshinki < 327624872yzh@163.com >

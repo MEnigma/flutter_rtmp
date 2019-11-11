@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
               IconButton(
                 icon: Icon(Icons.play_arrow),
                 onPressed: () {
-                  _manager.living(url: "rtmp://122.225.234.90/live/mark");
+                  _manager.living(url: "<rtmp path>");
                 },
               ),
               IconButton(
