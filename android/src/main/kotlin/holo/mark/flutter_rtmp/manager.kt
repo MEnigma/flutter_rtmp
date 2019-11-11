@@ -39,7 +39,7 @@ class RtmpView(context: Context?) : PlatformView {
             _manager = null
         }
     }
-
+p
     override fun getView(): View {
         if (_manager == null) {
             _manager = RtmpManager(_context)
@@ -91,7 +91,7 @@ class RtmpManager(context: Context?) : MethodChannel.MethodCallHandler {
 
     fun dispose() {
         stopAction()
-        preVie.destroy()
+        preVie?.destroy()
         preVie = null
     }
 
