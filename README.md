@@ -44,7 +44,7 @@
 * [ ] 旋转 (android端会根据宽高比调整横竖屏)
 
 
-# [LICENSE](https://github.com/MEnigma/flutter_rtmp/blob/master/LICENSE)
+## [LICENSE](https://github.com/MEnigma/flutter_rtmp/blob/master/LICENSE)
 
 * 参与者
 >* mark < https://github.com/MEnigma >
