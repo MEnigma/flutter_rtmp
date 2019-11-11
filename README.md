@@ -36,6 +36,14 @@
 >*   iOS 使用[LFLiveKit](https://github.com/LaiFengiOS/LFLiveKit)
 >*   android中使用[libWSLive](https://github.com/geeklx/myapplication2018/tree/master/p004_livedemo)
 
+### 进度
+
+* [ ] 推流
+* [ ] 切换摄像头
+* [x] 美颜
+* [x] 旋转 (android端会根据宽高比调整横竖屏)
+
+
 # [LICENSE](https://github.com/MEnigma/flutter_rtmp/blob/master/LICENSE)
 
 * 参与者
