@@ -38,10 +38,10 @@
 
 ### 进度
 
-* [ ] 推流
-* [ ] 切换摄像头
-* [x] 美颜
-* [x] 旋转 (android端会根据宽高比调整横竖屏)
+* [x] 推流
+* [x] 切换摄像头
+* [ ] 美颜
+* [ ] 旋转 (android端会根据宽高比调整横竖屏)
 
 
 # [LICENSE](https://github.com/MEnigma/flutter_rtmp/blob/master/LICENSE)
