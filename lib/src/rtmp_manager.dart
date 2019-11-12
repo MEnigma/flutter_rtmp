@@ -28,7 +28,6 @@ class RtmpManager {
 
   /// 直播状态
   RtmpStatue _statue = RtmpStatue.preparing;
-  
 
   Future<RtmpResponse> didCreated() async {
     Map res = null;
@@ -42,13 +41,26 @@ class RtmpManager {
 
   /// 开始直播
   Future<RtmpResponse> living({@required String url}) async {
-    return RtmpResponse.fromData(
+    if (_statue == RtmpStatue.living) return RtmpResponse.succeed();
+    RtmpResponse res = await RtmpResponse.fromData(
         await _configChannel.invokeMethod("startLive", {"url": url}));
+    if (res.isOk) {
+      _statue = RtmpStatue.living;
+    }
+    return res;
   }
 
   /// 停止直播
-  Future<RtmpResponse> stopLive() async =>
-      RtmpResponse.fromData(await _configChannel.invokeMethod("stopLive", {}));
+  Future<RtmpResponse> stopLive() async {
+    if (_statue == RtmpStatue.pause || _statue == RtmpStatue.stop)
+      return RtmpResponse.succeed();
+    RtmpResponse res = await RtmpResponse.fromData(
+        await _configChannel.invokeMethod("stopLive", {}));
+    if (res.isOk) {
+      _statue = RtmpStatue.stop;
+    }
+    return res;
+  }
 
   /// 旋转摄像头
   Future<RtmpResponse> rotateCamera() async {
@@ -63,15 +75,23 @@ class RtmpManager {
   /// 暂停直播
   Future<RtmpResponse> pauseLive() async {
     if (_statue != RtmpStatue.living) return RtmpResponse.succeed();
-    return RtmpResponse.fromData(
+    RtmpResponse res = await RtmpResponse.fromData(
         await _configChannel.invokeMethod("pauseLive", {}));
+    if (res.isOk) {
+      _statue = RtmpStatue.pause;
+    }
+    return res;
   }
 
   /// 恢复直播
   Future<RtmpResponse> resumeLive() async {
-    if (_statue != RtmpStatue.pause) return RtmpResponse.succeed();
-    return RtmpResponse.fromData(
+    if (_statue == RtmpStatue.living) return RtmpResponse.succeed();
+    RtmpResponse res = await RtmpResponse.fromData(
         await _configChannel.invokeMethod("resumeLive", {}));
+    if (res.isOk) {
+      _statue = RtmpStatue.living;
+    }
+    return res;
   }
 
   /// destroy

@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
               IconButton(
                 icon: Icon(Icons.play_arrow),
                 onPressed: () {
-                  _manager.living(url: "<rtmp path>");
+                  _manager.living(url: "rtmp://122.225.234.90/live/mark");
                 },
               ),
               IconButton(
@@ -40,6 +40,13 @@ class _MyAppState extends State<MyApp> {
                   _manager.stopLive();
                 },
               ),
+              IconButton(
+                icon: Icon(Icons.pause),
+                onPressed: () {
+                  _manager.pauseLive();
+                },
+              ),
+              
               IconButton(icon: Icon(Icons.transform),onPressed: (){
                 _manager.switchCamera();
               },)

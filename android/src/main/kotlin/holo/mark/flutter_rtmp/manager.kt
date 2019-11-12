@@ -237,7 +237,7 @@ class RtmpManager(context: Context?) : MethodChannel.MethodCallHandler {
         } else if (call.method.equals("rotateCamera")) {
 
         } else if (call.method.equals("pauseLive")) {
-            pauseLive(result)
+            stopLive(result)
         } else if (call.method.equals("resumeLive")) {
             resumeLive(result)
         } else if (call.method.equals("dispose")) {
