@@ -113,6 +113,7 @@ class RtmpManager(context: Context?) : MethodChannel.MethodCallHandler {
             preVie?.stopStreaming()
 
         } catch (e: Exception) {
+            println("[ RTMP ] stop error : $e")
             return false
         }
         return true

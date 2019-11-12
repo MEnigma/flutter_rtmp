@@ -10,6 +10,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_rtmp/src/def.dart';
 import 'package:flutter_rtmp/src/models.dart';
 
+/// 直播控制器
 class RtmpManager {
   RtmpManager({this.onCreated});
 
@@ -27,14 +28,13 @@ class RtmpManager {
 
   /// 直播状态
   RtmpStatue _statue = RtmpStatue.preparing;
+  
 
   Future<RtmpResponse> didCreated() async {
     Map res = null;
     try {
       res = await _configChannel.invokeMethod("initConfig", config.toMap());
-    } catch (e) {
-      print(" ___ catch e : $e ");
-    }
+    } catch (e) {}
 
     if (onCreated != null) onCreated();
     return RtmpResponse.fromData(res ?? {});
@@ -60,27 +60,32 @@ class RtmpManager {
     return res;
   }
 
+  /// 暂停直播
   Future<RtmpResponse> pauseLive() async {
     if (_statue != RtmpStatue.living) return RtmpResponse.succeed();
     return RtmpResponse.fromData(
         await _configChannel.invokeMethod("pauseLive", {}));
   }
 
+  /// 恢复直播
   Future<RtmpResponse> resumeLive() async {
     if (_statue != RtmpStatue.pause) return RtmpResponse.succeed();
     return RtmpResponse.fromData(
         await _configChannel.invokeMethod("resumeLive", {}));
   }
 
+  /// destroy
   Future dispose() async {
     return await _configChannel.invokeMethod("dispose", {});
   }
 
   ///切换摄像头
-  Future<RtmpResponse> switchCamera()async{
-    return RtmpResponse.fromData(await _configChannel.invokeMethod("switchCamera",{}));
+  Future<RtmpResponse> switchCamera() async {
+    return RtmpResponse.fromData(
+        await _configChannel.invokeMethod("switchCamera", {}));
   }
 
+  /// 获取摄像头分辨率
   @deprecated
   Future<double> cameraRatio() async {
     try {

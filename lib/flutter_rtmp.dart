@@ -6,6 +6,6 @@
 */
 
 
-export 'src/models.dart' show RtmpConfig,RtmpVideoConfig,RtmpAudioConfig;
+export 'src/models.dart' show RtmpConfig,RtmpVideoConfig,RtmpAudioConfig,RtmpResponse;
 export 'src/rtmp_manager.dart' show RtmpManager;
 export 'src/rtmp_view.dart' show RtmpView;
