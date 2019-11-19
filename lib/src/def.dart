@@ -5,16 +5,14 @@
 * ide : VSCode
 */
 
-import 'package:flutter/widgets.dart';
-
 /// 状态回调
-final String DEF_CAMERA_STATUE_CALLBACK = "holo#livingStatueCallback";
+const String DEF_CAMERA_STATUE_CALLBACK = "holo#livingStatueCallback";
 
 /// 视图id
-final String DEF_CAMERA_RTMP_VIEW = "holo#cameraRtmpView";
+const String DEF_CAMERA_RTMP_VIEW = "holo#cameraRtmpView";
 
 /// 配置方法
-final String DEF_CAMERA_SETTING_CONFIG = "holo#cameraSettingConfig";
+const String DEF_CAMERA_SETTING_CONFIG = "holo#cameraSettingConfig";
 
 enum RtmpStatue {
   preparing,
@@ -23,11 +21,4 @@ enum RtmpStatue {
   pause,
   resume,
   stop,
-}
-
-class _RtmpRoute{
-
-  static String get stop => "stopLive";
-
-
 }

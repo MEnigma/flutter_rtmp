@@ -11,8 +11,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-
   RtmpManager _manager;
   @override
   void initState() {
@@ -26,41 +24,58 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.play_arrow),
-                onPressed: () {
-                  _manager.living(url: "rtmp://122.225.234.90/live/mark");
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.stop),
-                onPressed: () {
-                  _manager.stopLive();
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.pause),
-                onPressed: () {
-                  _manager.pauseLive();
-                },
-              ),
-              
-              IconButton(icon: Icon(Icons.transform),onPressed: (){
-                _manager.switchCamera();
-              },)
-            ],
-          ),
           body: Center(
-            child: SizedBox(
-              width: 100,
-              height: 300,
-              child: RtmpView(
+        child: SafeArea(
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              RtmpView(
                 manager: _manager,
               ),
+              LiveMenuView(_manager)
+            ],
+          ),
+        ),
+      )),
+    );
+  }
+}
+
+class LiveMenuView extends StatelessWidget {
+  int _livingTime;
+  final RtmpManager manager;
+  LiveMenuView(this.manager);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.transparent,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Container(),
+          Container(
+              child: Row(children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.play_arrow),
+              onPressed: () {
+                manager.living(url: "<your rtmp address>");
+              },
             ),
-          )),
+            IconButton(
+                icon: Icon(Icons.pause),
+                onPressed: () {
+                  manager.pauseLive();
+                }),
+            IconButton(
+              icon: Icon(Icons.transform),
+              onPressed: () {
+                manager.switchCamera();
+              },
+            )
+          ])),
+        ],
+      ),
     );
   }
 }

@@ -5,10 +5,8 @@
 * ide : VSCode
 */
 
-import 'package:flutter/widgets.dart';
-
-int ORIENTATION_PORTRAIT = 1;
-int ORIENTATION_LANDSCAPE = 2;
+const int ORIENTATION_PORTRAIT = 1;
+const int ORIENTATION_LANDSCAPE = 2;
 
 class RtmpConfig {
   RtmpVideoConfig videoConfig = RtmpVideoConfig();
