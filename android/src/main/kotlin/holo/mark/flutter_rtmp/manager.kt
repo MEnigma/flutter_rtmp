@@ -34,10 +34,10 @@ class RtmpView(context: Context?) : PlatformView {
 
     override fun dispose() {
         println("[ RTMP ] will dispose manager from rtmpview : $_manager")
-        if (_manager != null) {
-            _manager?.dispose()
-            _manager = null
-        }
+//        if (_manager != null) {
+//            _manager?.dispose()
+//            _manager = null
+//        }
     }
 
     override fun getView(): View {
