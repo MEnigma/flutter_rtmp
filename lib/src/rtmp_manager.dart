@@ -5,10 +5,12 @@
 * ide : VSCode
 */
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rtmp/src/def.dart';
 import 'package:flutter_rtmp/src/models.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 /// 直播控制器
 class RtmpManager {
@@ -20,8 +22,51 @@ class RtmpManager {
   /// 配置
   MethodChannel _configChannel = MethodChannel(DEF_CAMERA_SETTING_CONFIG);
 
-  /// 回调
-  // EventChannel _statueBackChannel = EventChannel(DEF_CAMERA_STATUE_CALLBACK);
+  /// premission state
+  bool _permissionEnable;
+  bool get permissionEnable => _permissionEnable ?? false;
+
+  /// permission check
+  Future<bool> permissionCheck() async {
+    PermissionHandler pHandler = PermissionHandler();
+    List<PermissionGroup> requestPermission = [];
+
+    /// 摄像机
+    if (await pHandler.checkPermissionStatus(PermissionGroup.camera) !=
+        PermissionStatus.granted) {
+      requestPermission.add(PermissionGroup.camera);
+    }
+
+    /// 文件读写
+    if (await pHandler.checkPermissionStatus(PermissionGroup.storage) !=
+        PermissionStatus.granted) {
+      if (defaultTargetPlatform == TargetPlatform.android)
+        requestPermission.add(PermissionGroup.storage);
+    }
+
+    /// 麦克风
+    if (await pHandler.checkPermissionStatus(PermissionGroup.microphone) !=
+        PermissionStatus.granted) {
+      requestPermission.add(PermissionGroup.microphone);
+    }
+
+    if (requestPermission.length > 0) {
+      Map<PermissionGroup, PermissionStatus> res =
+          await pHandler.requestPermissions(requestPermission);
+      bool enable = true;
+      res.forEach((var p, PermissionStatus status) {
+        if (status != PermissionStatus.granted) {
+          enable = false;
+          return;
+        }
+      });
+      _permissionEnable = enable;
+      return _permissionEnable;
+    } else {
+      _permissionEnable = true;
+      return _permissionEnable;
+    }
+  }
 
   /// 配置
   final RtmpConfig config = RtmpConfig();
@@ -30,6 +75,7 @@ class RtmpManager {
   RtmpStatue _statue = RtmpStatue.preparing;
 
   Future<RtmpResponse> didCreated() async {
+    if (_statue != RtmpStatue.preparing) return RtmpResponse.faile();
     Map res;
     try {
       res = await _configChannel.invokeMethod("initConfig", config.toMap());

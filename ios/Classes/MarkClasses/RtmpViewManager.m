@@ -22,8 +22,8 @@
 #pragma mark public
 -(void)registLivingStatueCallback:(NSObject<FlutterBinaryMessenger> *)messenger{
     self._messenger = messenger;
-//    [self initConfig:nil result:nil];
-
+    //    [self initConfig:nil result:nil];
+    
 }
 -(void)handleMethod:(FlutterMethodCall *)method result:(FlutterResult)result{
     NSString *methodName =[NSString stringWithFormat:@"%@:result:",method.method];
@@ -50,8 +50,7 @@
 }
 /// 基础配置:配置回调
 -(void)initConfig:(NSDictionary *)param result:(FlutterResult)result{
-    if (!self.statueChannel) {
-    }
+    
     if(param){
         [self.config loadData:param];
         UIView *preview = self.session.preView;
@@ -60,8 +59,8 @@
         self.session.preView = preview;
     }
     NSLog(@"--- init config ---");
- [self requestAccessForAudio];
-  [self requestAccessForVideo];
+    [self requestAccessForAudio];
+    [self requestAccessForVideo];
     if(result){
         result(Response.successfulResponse.mj_JSONObject);
     }

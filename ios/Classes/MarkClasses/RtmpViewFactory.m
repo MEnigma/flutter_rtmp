@@ -24,6 +24,7 @@
     return FlutterStandardMessageCodec.sharedInstance;
 }
 - (NSObject<FlutterPlatformView> *)createWithFrame:(CGRect)frame viewIdentifier:(int64_t)viewId arguments:(id)args{
+    
     RtmpView *cameraView = [RtmpView.alloc initWithFrame:frame];
     self.manager.session.preView = cameraView.view;
     return cameraView;
@@ -49,8 +50,6 @@
     return self;
 }
 -(UIView *)view{
-    _showView.backgroundColor = UIColor.blueColor;
     return _showView;
 }
-
 @end

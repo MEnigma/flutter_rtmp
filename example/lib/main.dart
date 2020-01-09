@@ -12,6 +12,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   RtmpManager _manager;
+  int count = 0;
+  Timer _timer;
+
   @override
   void initState() {
     super.initState();
@@ -32,50 +35,54 @@ class _MyAppState extends State<MyApp> {
               RtmpView(
                 manager: _manager,
               ),
-              LiveMenuView(_manager)
+              Container(
+                padding: EdgeInsets.only(top: 20),
+                alignment: Alignment.topLeft,
+                child: Row(
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.play_arrow),
+                      onPressed: () {
+                        _manager.living(
+                            url: "rtmp://122.225.234.90/live/01000187553845");
+                        if (_timer == null)
+                          _timer ??= Timer.periodic(Duration(seconds: 1), (_) {
+                            setState(() {
+                              count += 1;
+                            });
+                          });
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.pause),
+                      onPressed: () {
+                        _manager.pauseLive();
+                        if (_timer != null) {
+                          _timer.cancel();
+                          _timer = null;
+                        }
+                        ;
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.switch_camera),
+                      onPressed: () {
+                        _manager.switchCamera();
+                      },
+                    ),
+                    Container(
+                      child: Text(
+                        "${count ~/ 60}:${count % 60}",
+                        style: TextStyle(fontSize: 17, color: Colors.blue),
+                      ),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),
       )),
-    );
-  }
-}
-
-class LiveMenuView extends StatelessWidget {
-  int _livingTime;
-  final RtmpManager manager;
-  LiveMenuView(this.manager);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.transparent,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(),
-          Container(
-              child: Row(children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.play_arrow),
-              onPressed: () {
-                manager.living(url: "<your rtmp address>");
-              },
-            ),
-            IconButton(
-                icon: Icon(Icons.pause),
-                onPressed: () {
-                  manager.pauseLive();
-                }),
-            IconButton(
-              icon: Icon(Icons.transform),
-              onPressed: () {
-                manager.switchCamera();
-              },
-            )
-          ])),
-        ],
-      ),
     );
   }
 }
