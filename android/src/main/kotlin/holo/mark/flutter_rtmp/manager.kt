@@ -20,13 +20,13 @@ import kotlin.math.max
 import kotlin.math.min
 
 class RtmpFactory : PlatformViewFactory(StandardMessageCodec()) {
-    lateinit var manager: RtmpManager? = null
+    lateinit var manager: RtmpManager = null
     override fun create(context: Context?, viewId: Int, args: Any?): PlatformView {
         println("[ RTMP ] enter factory $context, viewid : $viewId")
         if( manager == null){
             manager = RtmpManager(context)
         }
-        return manager ?: RtmpManager(context)
+        return manager
     }
 
 }
