@@ -20,15 +20,12 @@ import kotlin.math.max
 import kotlin.math.min
 
 class RtmpFactory : PlatformViewFactory(StandardMessageCodec()) {
-    lateinit var view: RtmpView
+//    lateinit var view: RtmpView
+
     override fun create(context: Context?, viewId: Int, args: Any?): PlatformView {
         println("[ RTMP ] enter factory $context, viewid : $viewId")
-        if( view == null){
-            view = RtmpView(context)
-        }
-        return view
+        return RtmpView(context)
     }
-
 }
 
 class RtmpView(context: Context?) : PlatformView {
@@ -37,10 +34,10 @@ class RtmpView(context: Context?) : PlatformView {
 
     override fun dispose() {
         println("[ RTMP ] will dispose manager from rtmpview : $_manager")
-//        if (_manager != null) {
-//            _manager?.dispose()
-//            _manager = null
-//        }
+        if (_manager != null) {
+            _manager?.dispose()
+            _manager = null
+        }
     }
 
     override fun getView(): View {
@@ -50,8 +47,6 @@ class RtmpView(context: Context?) : PlatformView {
         println("[ RTMP ] will get view from rtmpview : $_manager")
         return _manager?.getView() ?: View(_context)
     }
-
-
 }
 
 class RtmpManager(context: Context?) : MethodChannel.MethodCallHandler {
@@ -161,6 +156,7 @@ class RtmpManager(context: Context?) : MethodChannel.MethodCallHandler {
     /// 默认配置,不执行配置,仅做保存
     fun initConfig(param: Map<String, Any>, result: MethodChannel.Result) {
         try {
+            @Suppress("UNCHECKED_CAST")
             config.init(param as Map<String, Map<String, Any>>)
             result.success(Response().succeessful())
         } catch (e: Exception) {
@@ -230,8 +226,10 @@ class RtmpManager(context: Context?) : MethodChannel.MethodCallHandler {
 
     //--------------------------- 消息方法监听 ---------------------------
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
+        @Suppress("UNCHECKED_CAST")
         val param: Map<String, Any> = call.arguments as Map<String, Any>
         if (call.method.equals("startLive")) {
+            @Suppress("UNCHECKED_CAST")
             startLive(param as Map<String, String>, result)
         } else if (call.method.equals("initConfig")) {
             initConfig(param, result)

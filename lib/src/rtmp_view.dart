@@ -28,37 +28,46 @@ class RtmpView extends StatefulWidget {
   final WidgetBuilder errorWidgetBuilder;
 
   RtmpView(
-      {@required this.manager,
+      {Key key,
+      @required this.manager,
       this.checkPermission = true,
       this.permissionLoadingWidgetBuilder,
-      this.errorWidgetBuilder});
+      this.errorWidgetBuilder})
+      : super(key: key);
 
   @override
   _RtmpViewState createState() => _RtmpViewState();
 }
 
 class _RtmpViewState extends State<RtmpView> {
+  Widget _platformView;
+  GlobalKey _globalKey = GlobalKey();
+  
   Widget _getPlatformView() {
-    var view;
-    if (defaultTargetPlatform == TargetPlatform.iOS) {
-      view = UiKitView(
-        viewType: DEF_CAMERA_RTMP_VIEW,
-        onPlatformViewCreated: _onCreated,
-      );
-    } else if (defaultTargetPlatform == TargetPlatform.android) {
-      view = AndroidView(
-        viewType: DEF_CAMERA_RTMP_VIEW,
-        onPlatformViewCreated: _onCreated,
-      );
-    } else {
-      view = Container();
+    print("[RTMP] get platformview");
+    if (_platformView == null) {
+      if (defaultTargetPlatform == TargetPlatform.iOS) {
+        _platformView = UiKitView(
+          key: _globalKey,
+          viewType: DEF_CAMERA_RTMP_VIEW,
+          onPlatformViewCreated: _onCreated,
+        );
+      } else if (defaultTargetPlatform == TargetPlatform.android) {
+        _platformView = AndroidView(
+          key: _globalKey,
+          viewType: DEF_CAMERA_RTMP_VIEW,
+          onPlatformViewCreated: _onCreated,
+        );
+      } else {
+        _platformView = Container();
+      }
     }
     return Container(
         color: Colors.transparent,
         alignment: Alignment.center,
         child: AspectRatio(
           aspectRatio: 720.0 / 1280,
-          child: view,
+          child: _platformView,
         ));
   }
 
