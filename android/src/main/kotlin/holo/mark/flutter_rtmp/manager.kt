@@ -20,7 +20,9 @@ import kotlin.math.max
 import kotlin.math.min
 
 class RtmpFactory : PlatformViewFactory(StandardMessageCodec()) {
-
+    init {
+        println("rtmp 工厂创建")
+    }
     override fun create(context: Context?, viewId: Int, args: Any?): PlatformView {
         println("[ RTMP ] enter factory $context, viewid : $viewId")
         return RtmpView(context)
