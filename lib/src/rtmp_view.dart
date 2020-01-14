@@ -15,7 +15,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 /// 直播推流回显view,需要依赖[RtmpManager]控制其行为
 /// 当前为固定宽高比例 720/1280 ,以适应大多数摄像头采集的尺寸比例
-class RtmpView extends StatefulWidget {
+class RtmpView extends StatelessWidget {
   final RtmpManager manager;
 
   /// 是否检查权限,过程中会有loading, 默认[false]
@@ -36,72 +36,30 @@ class RtmpView extends StatefulWidget {
       : super(key: key);
 
   @override
-  _RtmpViewState createState() => _RtmpViewState();
-}
-
-class _RtmpViewState extends State<RtmpView> {
-  Widget _platformView;
-  GlobalKey _globalKey = GlobalKey();
-  
-  Widget _getPlatformView() {
-    print("[RTMP] get platformview");
-    if (_platformView == null) {
-      if (defaultTargetPlatform == TargetPlatform.iOS) {
-        _platformView = UiKitView(
-          key: _globalKey,
-          viewType: DEF_CAMERA_RTMP_VIEW,
-          onPlatformViewCreated: _onCreated,
-        );
-      } else if (defaultTargetPlatform == TargetPlatform.android) {
-        _platformView = AndroidView(
-          key: _globalKey,
-          viewType: DEF_CAMERA_RTMP_VIEW,
-          onPlatformViewCreated: _onCreated,
-        );
-      } else {
-        _platformView = Container();
-      }
-    }
-    return Container(
-        color: Colors.transparent,
-        alignment: Alignment.center,
-        child: AspectRatio(
-          aspectRatio: 720.0 / 1280,
-          child: _platformView,
-        ));
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return widget.checkPermission
-        ? widget.manager.permissionEnable
-            ? _getPlatformView()
+    return checkPermission
+        ? manager.permissionEnable
+            ? manager.view()
             : FutureBuilder(
-                future: widget.manager.permissionCheck(),
+                future: manager.permissionCheck(),
                 builder: (_, AsyncSnapshot shot) {
                   if (shot.connectionState != ConnectionState.done) {
-                    return widget.permissionLoadingWidgetBuilder != null
-                        ? widget.permissionLoadingWidgetBuilder(_)
+                    return permissionLoadingWidgetBuilder != null
+                        ? permissionLoadingWidgetBuilder(_)
                         : Center(
                             child: CircularProgressIndicator(),
                           );
                   } else {
                     return shot.data != null && shot.data
-                        ? _getPlatformView()
-                        : widget.errorWidgetBuilder != null
-                            ? widget.errorWidgetBuilder(_)
+                        ? manager.view()
+                        : errorWidgetBuilder != null
+                            ? errorWidgetBuilder(_)
                             : Center(
                                 child: Text("Permission error"),
                               );
                   }
                 },
               )
-        : _getPlatformView();
-  }
-
-  void _onCreated(int statue) {
-    if (widget.manager != null) {
-      widget.manager.didCreated();
-    }
+        : manager.view();
   }
 }

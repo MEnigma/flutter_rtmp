@@ -20,10 +20,8 @@ import kotlin.math.max
 import kotlin.math.min
 
 class RtmpFactory : PlatformViewFactory(StandardMessageCodec()) {
-//    lateinit var view: RtmpView
-
+//    var view: RtmpView?= null
     override fun create(context: Context?, viewId: Int, args: Any?): PlatformView {
-        println("[ RTMP ] enter factory $context, viewid : $viewId")
         return RtmpView(context)
     }
 }
@@ -33,7 +31,6 @@ class RtmpView(context: Context?) : PlatformView {
     private var _manager: RtmpManager? = null
 
     override fun dispose() {
-        println("[ RTMP ] will dispose manager from rtmpview : $_manager")
         if (_manager != null) {
             _manager?.dispose()
             _manager = null
@@ -44,7 +41,6 @@ class RtmpView(context: Context?) : PlatformView {
         if (_manager == null) {
             _manager = RtmpManager(_context)
         }
-        println("[ RTMP ] will get view from rtmpview : $_manager")
         return _manager?.getView() ?: View(_context)
     }
 }
@@ -59,12 +55,9 @@ class RtmpManager(context: Context?) : MethodChannel.MethodCallHandler {
 
     init {
         _context = context
-//        cameraView = SrsCameraView(context)
         preVie = StreamLiveCameraView(context)
-
         config = RtmpConfig()
         _initPublisher()
-
         /// 注册配置回调方法
         MethodChannel(FlutterRtmpPlugin.registrar.messenger(), DEF_CAMERA_SETTING_CONFIG).setMethodCallHandler(this)
     }

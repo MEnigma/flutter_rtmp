@@ -6,6 +6,7 @@
 */
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rtmp/src/def.dart';
@@ -74,7 +75,7 @@ class RtmpManager {
   /// 直播状态
   RtmpStatue _statue = RtmpStatue.preparing;
 
-  Future<RtmpResponse> didCreated() async {
+  Future<RtmpResponse> _didCreated() async {
     if (_statue != RtmpStatue.preparing) return RtmpResponse.faile();
     Map res;
     try {
@@ -132,7 +133,9 @@ class RtmpManager {
 
   /// destroy
   Future dispose() async {
-    return await _configChannel.invokeMethod("dispose", {});
+    await _configChannel.invokeMethod("dispose", {});
+    _platformView = null;
+    _globalKey = null;
   }
 
   ///切换摄像头
@@ -158,5 +161,39 @@ class RtmpManager {
     } catch (Exception) {
       return null;
     }
+  }
+
+  GlobalKey _globalKey = GlobalKey();
+  Widget _platformView;
+  Widget view() {
+    if (_platformView == null) {
+      print("[RTMP] get platformview");
+      if (defaultTargetPlatform == TargetPlatform.iOS) {
+        _platformView = UiKitView(
+          key: _globalKey,
+          viewType: DEF_CAMERA_RTMP_VIEW,
+          onPlatformViewCreated: (_) {
+            _didCreated();
+          },
+        );
+      } else if (defaultTargetPlatform == TargetPlatform.android) {
+        _platformView = AndroidView(
+          key: _globalKey,
+          viewType: DEF_CAMERA_RTMP_VIEW,
+          onPlatformViewCreated: (_) {
+            _didCreated();
+          },
+        );
+      } else {
+        _platformView = Container();
+      }
+    }
+    return Container(
+        color: Colors.transparent,
+        alignment: Alignment.center,
+        child: AspectRatio(
+          aspectRatio: 720.0 / 1280,
+          child: _platformView,
+        ));
   }
 }
