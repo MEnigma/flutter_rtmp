@@ -17,10 +17,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    super.initState();
     _manager = RtmpManager(onCreated: () {
       print("--- view did created ---");
     });
+    super.initState();
+
   }
 
   @override

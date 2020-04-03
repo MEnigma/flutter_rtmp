@@ -18,6 +18,7 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -44,10 +45,8 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.aar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
-
-//    implementation project(":libWSLive")
+    implementation 'com.github.WangShuo1143368701:WSLiveDemo:1.7'
 }
