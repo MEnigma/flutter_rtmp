@@ -27,6 +27,7 @@
     
     RtmpView *cameraView = [RtmpView.alloc initWithFrame:frame];
     self.manager.session.preView = cameraView.view;
+    NSLog(@"will create view");
     return cameraView;
 }
 

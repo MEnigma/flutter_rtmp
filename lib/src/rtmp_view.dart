@@ -18,7 +18,7 @@ import 'package:permission_handler/permission_handler.dart';
 class RtmpView extends StatelessWidget {
   final RtmpManager manager;
 
-  /// 是否检查权限,过程中会有loading, 默认[false]
+  /// 是否检查权限,过程中会有loading, default [true]
   final bool checkPermission;
 
   /// loading view
