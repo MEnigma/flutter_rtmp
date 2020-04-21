@@ -14,6 +14,7 @@ class _MyAppState extends State<MyApp> {
   RtmpManager _manager;
   int count = 0;
   Timer _timer;
+  String rtmpUrl = "rtmp://52.17.236.227/WebRTCAppEE/227267658929207884605621";
 
   @override
   void initState() {
@@ -44,7 +45,7 @@ class _MyAppState extends State<MyApp> {
                       icon: Icon(Icons.play_arrow),
                       onPressed: () {
                         _manager.living(
-                            url: "<rtmp address>");
+                            url: rtmpUrl);
                         if (_timer == null)
                           _timer ??= Timer.periodic(Duration(seconds: 1), (_) {
                             setState(() {

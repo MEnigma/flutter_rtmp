@@ -9,9 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_rtmp/src/def.dart';
 import 'package:flutter_rtmp/src/rtmp_manager.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 /// 直播推流回显view,需要依赖[RtmpManager]控制其行为
 /// 当前为固定宽高比例 720/1280 ,以适应大多数摄像头采集的尺寸比例
