@@ -114,13 +114,14 @@
 -(void)switchCamera:(NSDictionary *)param result:(FlutterResult)result{
     if (self.session) {
         @try {
-            [self.session stopLive];
+            LFLiveState oriState = self.session.state;
+            if (oriState == LFLiveStart) [self.session stopLive];
             if(self.session.captureDevicePosition == AVCaptureDevicePositionBack){
                 [self.session setCaptureDevicePosition:AVCaptureDevicePositionFront];
             }else{
                 [self.session setCaptureDevicePosition:AVCaptureDevicePositionBack];
             }
-            [self.session startLive:self.session.streamInfo];
+            if (oriState == LFLiveStart) [self.session startLive:self.session.streamInfo];
             if(result)
                 result(Response.successfulResponse.mj_JSONObject);
         } @catch (NSException *exception) {

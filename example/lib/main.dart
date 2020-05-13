@@ -44,7 +44,7 @@ class _MyAppState extends State<MyApp> {
                       icon: Icon(Icons.play_arrow),
                       onPressed: () {
                         _manager.living(
-                            url: "rtmp://122.225.234.90/live/mark");
+                            url: "");
                         if (_timer == null)
                           _timer ??= Timer.periodic(Duration(seconds: 1), (_) {
                             setState(() {
