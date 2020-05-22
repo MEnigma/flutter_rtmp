@@ -38,9 +38,7 @@ environment:
 >    /// 控制器
 >    void initState() {
 >        super.initState();
->        _manager = RtmpManager(onCreated: () {
->            print("--- view did created ---");
->        });
+>        _manager = RtmpManager();
 >    }
 >
 >    /// 视图
