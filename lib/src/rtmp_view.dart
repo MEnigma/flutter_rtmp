@@ -5,61 +5,65 @@
 * ide : VSCode
 */
 
-import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
+import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_rtmp/src/def.dart';
+import 'package:flutter_rtmp/flutter_rtmp.dart';
 import 'package:flutter_rtmp/src/rtmp_manager.dart';
-import 'package:permission_handler/permission_handler.dart';
 
-/// 直播推流回显view,需要依赖[RtmpManager]控制其行为
-/// 当前为固定宽高比例 720/1280 ,以适应大多数摄像头采集的尺寸比例
-class RtmpView extends StatelessWidget {
+import 'def.dart';
+
+class RtmpView extends StatefulWidget {
+  RtmpView({@required this.manager, this.onCreated});
+
   final RtmpManager manager;
 
-  /// 是否检查权限,过程中会有loading, default [true]
-  final bool checkPermission;
+  final VoidCallback onCreated;
 
-  /// loading view
-  final WidgetBuilder permissionLoadingWidgetBuilder;
+  @override
+  _RtmpViewState createState() => _RtmpViewState();
+}
 
-  /// errorwidget for permission
-  final WidgetBuilder errorWidgetBuilder;
+class _RtmpViewState extends State<RtmpView> {
+  List orientations = [];
 
-  RtmpView(
-      {Key key,
-      @required this.manager,
-      this.checkPermission = true,
-      this.permissionLoadingWidgetBuilder,
-      this.errorWidgetBuilder})
-      : super(key: key);
+  initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  }
+
+  Widget _platformView() {
+    if (Platform.isIOS) {
+      return UiKitView(
+        viewType: DEF_CAMERA_RTMP_VIEW,
+        onPlatformViewCreated: (_) {
+            widget.manager?.initConfig();
+          if (widget.onCreated != null) {
+            widget.onCreated();
+          }
+        },
+      );
+    } else if (Platform.isAndroid) {
+      return AndroidView(
+        viewType: DEF_CAMERA_RTMP_VIEW,
+        onPlatformViewCreated: (_) {
+            widget.manager?.initConfig();
+          if (widget.onCreated != null) {
+            widget.onCreated();
+          }
+        },
+      );
+    } else {
+      if (widget.onCreated != null) {
+        widget.onCreated();
+      }
+      return Container();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return checkPermission
-        ? manager.permissionEnable
-            ? manager.view()
-            : FutureBuilder(
-                future: manager.permissionCheck(),
-                builder: (_, AsyncSnapshot shot) {
-                  if (shot.connectionState != ConnectionState.done) {
-                    return permissionLoadingWidgetBuilder != null
-                        ? permissionLoadingWidgetBuilder(_)
-                        : Center(
-                            child: CircularProgressIndicator(),
-                          );
-                  } else {
-                    return shot.data != null && shot.data
-                        ? manager.view()
-                        : errorWidgetBuilder != null
-                            ? errorWidgetBuilder(_)
-                            : Center(
-                                child: Text("Permission error"),
-                              );
-                  }
-                },
-              )
-        : manager.view();
+    return _platformView();
   }
 }

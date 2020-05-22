@@ -1,11 +1,12 @@
 name: flutter_rtmp
 description: A rtmp plugin.Support both iOS and Android. It has been upload to github. 
-version: 0.1.4
+version: 0.1.6
 #author: mark<mkw666311@163.com>,youshinki<327624872yzh@163.com>
 homepage: https://github.com/MEnigma
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
+  flutter: ">=1.10.0"
 
 dependencies:
   flutter:
@@ -26,9 +27,13 @@ flutter:
   # be modified. They are used by the tooling to maintain consistency when
   # adding or updating assets for this project.
   plugin:
-    androidPackage: holo.mark.flutter_rtmp
-    pluginClass: FlutterRtmpPlugin
-
+    platforms:
+      android:
+        package: holo.mark.flutter_rtmp
+        pluginClass: FlutterRtmpPlugin
+      ios:
+        pluginClass: FlutterRtmpPlugin
+      
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

@@ -1,6 +1,5 @@
 package holo.mark.flutter_rtmp
 
-
 // 状态回调
 var DEF_CAMERA_STATUE_CALLBACK = "holo#livingStatueCallback"
 

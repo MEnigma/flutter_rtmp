@@ -22,3 +22,15 @@ enum RtmpStatue {
   resume,
   stop,
 }
+
+abstract class MethodDef {
+  static String get initConfig => "initConfig";
+  static String get startLive => "startLive";
+  static String get stopLive => "stopLive";
+  static String get pauseLive => "pauseLive";
+  static String get resumeLive => "resumeLive";
+  static String get dispose => "dispose";
+  static String get cameraRatio => "cameraRatio";
+  static String get switchCamera => "switchCamera";
+  static String get rotateOrientation => "rotateOrientation";
+}

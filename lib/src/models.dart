@@ -5,8 +5,7 @@
 * ide : VSCode
 */
 
-const int ORIENTATION_PORTRAIT = 1;
-const int ORIENTATION_LANDSCAPE = 2;
+import 'package:flutter/material.dart';
 
 class RtmpConfig {
   RtmpVideoConfig videoConfig = RtmpVideoConfig();
@@ -17,7 +16,9 @@ class RtmpConfig {
   }
 }
 
-/// 视频配置
+/// 视频配置 
+/// 暂未使用
+/// not used
 class RtmpVideoConfig {
   // 自动旋转
   bool autoRotate = false;
@@ -26,26 +27,26 @@ class RtmpVideoConfig {
   int quality = 5;
 
   //竖屏
-  int orientation = ORIENTATION_PORTRAIT;
+  Orientation orientation = Orientation.portrait;
 
   Map toMap() {
     return {
       "autoRotate": autoRotate,
       "quality": quality,
-      "orientation": orientation
+      "orientation": orientation.index
     };
   }
 
-  void rotate(){
-    if(orientation == ORIENTATION_PORTRAIT){
-      orientation = ORIENTATION_LANDSCAPE;
-    }else{
-      orientation = ORIENTATION_PORTRAIT;
+  void rotate() {
+    if (orientation == Orientation.portrait) {
+      orientation = Orientation.landscape;
+    } else {
+      orientation = Orientation.portrait;
     }
   }
+
   /// 是否为横屏
-  bool get isLandspace => orientation == ORIENTATION_LANDSCAPE;
-  
+  bool get isLandspace => orientation == Orientation.landscape;
 }
 
 class RtmpAudioConfig {}
@@ -54,14 +55,14 @@ class RtmpAudioConfig {}
 class RtmpResponse {
   bool succeed = false;
   String message = "";
-
+  dynamic result;
   Map oridata;
 
-  RtmpResponse.succeed({String msg}){
+  RtmpResponse.succeed({String msg}) {
     succeed = true;
     message = msg ?? "";
   }
-  RtmpResponse.faile({String msg}){
+  RtmpResponse.faile({String msg}) {
     succeed = false;
     message = msg ?? "";
   }
@@ -69,7 +70,28 @@ class RtmpResponse {
     oridata = data;
     succeed = data['succeed'] ?? false;
     message = data['message'] ?? "";
+    result = data["result"] ?? {};
   }
 
   bool get isOk => succeed == true;
+}
+
+/// rtmp 快照
+class RtmpSnapshot {
+  // 是否拥有快照信息
+  bool hasShot = false;
+  // 当前尺寸
+  Size currentCtxSize;
+  // 直播地址
+  String rtmpUrl;
+  // 直播状态
+  int status;
+
+  RtmpSnapshot.fromData(Map data) {
+    if (0 == data.keys.length && data != null) {
+      hasShot = true;
+    }
+    data ??= {};
+    status = data["status"] ?? 0;
+  }
 }

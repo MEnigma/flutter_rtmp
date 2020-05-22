@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:async';
 
 import 'package:flutter_rtmp/flutter_rtmp.dart';
@@ -12,15 +15,26 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   RtmpManager _manager;
-  int count = 0;
+  int seconds = 0;
   Timer _timer;
 
   @override
   void initState() {
     super.initState();
-    _manager = RtmpManager(onCreated: () {
-      print("--- view did created ---");
+    _manager = RtmpManager();
+  }
+
+  startCount() {
+    _timer ??= Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        seconds += 1;
+      });
     });
+  }
+
+  stopCount() {
+    _timer?.cancel();
+    _timer = null;
   }
 
   @override
@@ -30,51 +44,69 @@ class _MyAppState extends State<MyApp> {
           body: Center(
         child: SafeArea(
           child: Stack(
-            fit: StackFit.expand,
+            // fit: StackFit.expand,
             children: <Widget>[
               RtmpView(
                 manager: _manager,
               ),
               Container(
-                padding: EdgeInsets.only(top: 20),
-                alignment: Alignment.topLeft,
-                child: Row(
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.play_arrow),
-                      onPressed: () {
-                        _manager.living(
-                            url: "");
-                        if (_timer == null)
-                          _timer ??= Timer.periodic(Duration(seconds: 1), (_) {
-                            setState(() {
-                              count += 1;
-                            });
-                          });
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.pause),
-                      onPressed: () {
-                        _manager.pauseLive();
-                        if (_timer != null) {
-                          _timer.cancel();
-                          _timer = null;
-                        }
-                        ;
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.switch_camera),
-                      onPressed: () {
-                        _manager.switchCamera();
-                      },
-                    ),
+                child: Column(
+                  children: [
                     Container(
-                      child: Text(
-                        "${count ~/ 60}:${count % 60}",
-                        style: TextStyle(fontSize: 17, color: Colors.blue),
-                      ),
+                        // height: 40,
+                        // color: Colors.white,
+                        // padding: EdgeInsets.only(top: 20),
+                        alignment: Alignment.topLeft,
+                        child: Flex(
+                          direction: Axis.horizontal,
+                          children: [
+                            ActionChip(
+                                label: Text("开始"),
+                                onPressed: () async {
+                                  String config = await rootBundle
+                                      .loadString("src/testfile.json");
+                                  Map param = jsonDecode(config);
+                                  await _manager
+                                      .startLive(param["rtmpurl"] ?? "");
+                                  setState(() {});
+                                  startCount();
+                                }),
+                            ActionChip(
+                                label: Text("暂停"),
+                                onPressed: () async {
+                                  await _manager.pauseLive();
+                                  setState(() {});
+                                  stopCount();
+                                }),
+                            ActionChip(
+                                label: Text("恢复"),
+                                onPressed: () async {
+                                  await _manager.resumeLive();
+                                  setState(() {});
+                                  startCount();
+                                }),
+                            ActionChip(
+                                label: Text("结束"),
+                                onPressed: () async {
+                                  await _manager.stopLive();
+                                  setState(() {});
+                                  stopCount();
+                                }),
+                            ActionChip(
+                                label: Text("切换摄像头"),
+                                onPressed: () async {
+                                  await _manager.switchCamera();
+                                  setState(() {});
+                                }),
+                          ],
+                        )),
+                    Container(
+                      alignment: Alignment.topLeft,
+                      child: RichText(
+                          text: TextSpan(
+                              text:
+                                  "快照信息 \n STATUS : ${_manager.snapShot?.status ?? 'NO'}\t\t",
+                              children: [TextSpan(text: "sec : $seconds")])),
                     )
                   ],
                 ),

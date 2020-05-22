@@ -29,3 +29,17 @@ class _MyAppState extends State<MyApp> {
   
 }
 ```
+## 0.1.6
+> ### Android 层
+
+#### 1).修改推流插件到yasea
+```
+无需设置
+        ndk{
+            abiFilters "armeabi-v7a"
+        }
+
+可以在VSCode中直接运行调试 *hot reload 时会黑屏*
+```
+> ### Flutter 层
+* 修改 Rtmp / RtmpManager 绑定关系
