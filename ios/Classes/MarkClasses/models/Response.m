@@ -21,5 +21,12 @@
     return res;
 }
 
-
++(Response *)make:(bool)succeed message:(NSString *)message result:(NSDictionary *)result errcode:(ErrCode)errcode{
+    Response *res = Response.new;
+    res.succeed = succeed;
+    res.message = message;
+    res.result = result.copy;
+    res.errorCode = errcode;
+    return res;
+}
 @end

@@ -137,7 +137,7 @@ class RtmpLoger {
     var rtmpUrl: String = ""
 
     /// 连接状态
-    var status: Int = RTMP_STATUE_Preparing
+    var status: Int = RTMP_STATUE_Stop
 
     /// 是否可以暂停
     fun canPause(): Boolean = status == RTMP_STATUE_Pushing || status == RTMP_STATUE_Pending

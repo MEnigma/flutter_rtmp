@@ -14,10 +14,8 @@ var PKG_NAME = "hv.rtmp"
 
 
 // --------------  连接状态 --------------
-/// 准备中
-var RTMP_STATUE_Preparing = 0
-/// 准备结束
-var RTMP_STATUE_Ready = -1
+/// 准备
+var RTMP_STATUE_Ready = 0
 /// 连接中
 var RTMP_STATUE_Pending = 1
 /// 已连接

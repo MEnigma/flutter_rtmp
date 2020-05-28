@@ -13,9 +13,10 @@
 @property (nonatomic, assign) FlutterEventChannel *statueChannel;
 @property (nonatomic, strong) HoloLiveStatueHandler *statueHandler;
 
-@property(nonatomic,strong)NSObject<FlutterBinaryMessenger> * _messenger;
+@property (nonatomic, strong) NSObject<FlutterBinaryMessenger> * _messenger;
 
-@property(nonatomic,strong) RtmpConfig *config;
+@property (nonatomic, strong) SessionInf *snapshot;
+@property (nonatomic, strong) RtmpConfig *config;
 @end
 @implementation RtmpViewManager
 
@@ -42,10 +43,16 @@
     @try{
         NSLog(@"--- startLive ---");
         [self.session startLive:stream];
-        if(result)result([Response successfulResponse].mj_JSONObject);
+        [self.snapshot loadSessionInf:self.session];
+        if(result)result([Response make:true
+                                message:@""
+                                 result:self.snapshot.mj_JSONObject
+                                errcode:ErrCodeNone].mj_JSONObject);
     }@catch(NSException *e){
-        Response *response = [Response failResponse: [NSString stringWithFormat:@"%@",e]];
-        if(result)result([response mj_JSONObject]);
+        if(result)result([Response make:false
+                                message:e.description
+                                 result:self.snapshot.mj_JSONObject
+                                errcode:ErrCodeNone].mj_JSONObject);
     }
 }
 /// 基础配置:配置回调
@@ -61,8 +68,12 @@
     NSLog(@"--- init config ---");
     [self requestAccessForAudio];
     [self requestAccessForVideo];
+    [self.snapshot loadSessionInf:self.session];
     if(result){
-        result(Response.successfulResponse.mj_JSONObject);
+        result([Response make:true
+                      message:@""
+                       result:self.snapshot.mj_JSONObject
+                      errcode:ErrCodeNone].mj_JSONObject);
     }
 }
 /// 停止直播
@@ -70,12 +81,19 @@
     if(self.session && self.session.state == LFLiveStart){
         @try {
             [self.session stopLive];
+            [self.snapshot loadSessionInf:self.session];
             if(result){
-                result(Response.successfulResponse.mj_JSONObject);
+                result([Response make:true
+                              message:@""
+                               result:self.snapshot.mj_JSONObject
+                              errcode:ErrCodeNone].mj_JSONObject);
             }
         } @catch (NSException *exception) {
             if(result){
-                result([Response failResponse:[NSString stringWithFormat:@"%@",exception]].mj_JSONObject);
+                result([Response make:false
+                              message:exception.description
+                               result:self.snapshot.mj_JSONObject
+                              errcode:ErrCodeNone].mj_JSONObject);
             }
         }
     }
@@ -85,12 +103,19 @@
     if(self.session && self.session.state == LFLiveStart){
         @try {
             [self.session stopLive];
+            [self.snapshot loadSessionInf:self.session];
             if(result){
-                result(Response.successfulResponse.mj_JSONObject);
+                result([Response make:true
+                              message:@""
+                               result:self.snapshot.mj_JSONObject
+                              errcode:ErrCodeNone].mj_JSONObject);
             }
         } @catch (NSException *exception) {
             if(result){
-                result([Response failResponse:[NSString stringWithFormat:@"%@",exception]].mj_JSONObject);
+                result([Response make:false
+                              message:exception.description
+                               result:self.snapshot.mj_JSONObject
+                              errcode:ErrCodeNone].mj_JSONObject);
             }
         }
         
@@ -101,13 +126,23 @@
     if (self.session) {
         @try {
             [self.session startLive:self.session.streamInfo];
+            [self.snapshot loadSessionInf:self.session];
             if(result)
-                result(Response.successfulResponse.mj_JSONObject);
+                result([Response make:true
+                              message:@""
+                               result:self.snapshot.mj_JSONObject
+                              errcode:ErrCodeNone].mj_JSONObject);
+            
         } @catch (NSException *exception) {
             if(result)
-                result([Response failResponse:[NSString stringWithFormat:@"%@",exception]].mj_JSONObject);
+                result([Response make:false
+                              message:exception.description
+                               result:self.snapshot.mj_JSONObject
+                              errcode:ErrCodeNone].mj_JSONObject);
+            
         }
     }
+    
 }
 
 /// x切换摄像头
@@ -122,15 +157,32 @@
                 [self.session setCaptureDevicePosition:AVCaptureDevicePositionBack];
             }
             if (oriState == LFLiveStart) [self.session startLive:self.session.streamInfo];
+            [self.snapshot loadSessionInf:self.session];
             if(result)
-                result(Response.successfulResponse.mj_JSONObject);
+                result([Response make:true
+                              message:@""
+                               result:self.snapshot.mj_JSONObject
+                              errcode:ErrCodeNone].mj_JSONObject);
         } @catch (NSException *exception) {
             if(result)
-                result([Response failResponse:[NSString stringWithFormat:@"%@",exception]].mj_JSONObject);
+                result([Response make:false
+                              message:exception.description
+                               result:self.snapshot.mj_JSONObject
+                              errcode:ErrCodeNone].mj_JSONObject);
+            
         }
     }
 }
 
+/// 获取快照
+-(void)snapshot:(NSDictionary *)param result:(FlutterResult)result{
+    if (self.session){
+        [self.snapshot loadSessionInf:self.session];
+        result([Response make:true message:@"" result:self.snapshot.mj_JSONObject errcode:ErrCodeNone].mj_JSONObject);
+    }else{
+        result([Response failResponse:@"no session"].mj_JSONObject);
+    }
+}
 
 - (void)requestAccessForVideo{
     __weak typeof(self) _self = self;
@@ -190,14 +242,15 @@
     if(_statueChannel && _statueHandler){
         _statueHandler.sink([debugInfo mj_JSONString]);
     }
+    [self.snapshot loadSessionInf:session];
 }
 -(void)liveSession:(LFLiveSession *)session liveStateDidChange:(LFLiveState)state{
     SessionInf *inf = SessionInf.new;
-    inf.state = state;
     if(_statueChannel && _statueHandler){
         _statueHandler.sink([inf mj_JSONObject]);
     }
-    
+    [self.snapshot loadSessionInf:session];
+    [self.snapshot updateStatus:state];
 }
 #pragma mark lazy load
 -(RtmpConfig *)config{
@@ -215,5 +268,11 @@
     return _session;
 }
 
+-(SessionInf *)snapshot{
+    if (!_snapshot) {
+        _snapshot = SessionInf.new;
+    }
+    return _snapshot;
+}
 
 @end
