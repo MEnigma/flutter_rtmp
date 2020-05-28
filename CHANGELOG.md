@@ -43,3 +43,8 @@ class _MyAppState extends State<MyApp> {
 ```
 > ### Flutter 层
 * 修改 Rtmp / RtmpManager 绑定关系
+
+## 0.1.6.1 
+> ### 移除了permission_handler插件
+> ### 修改iOS屏幕旋转状态的初始值
+> ### 添加iOS端快照信息(快照信息目前有状态不同步的问题)

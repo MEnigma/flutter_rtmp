@@ -70,5 +70,8 @@ environment:
 >* youshinki < https://github.com/youshinki >
 
 ### Versions
-* [0.1.4](https://github.com/MEnigma/flutter_rtmp/tree/v0.1.4)
+##### [更新记录](https://github.com/MEnigma/flutter_rtmp/blob/master/CHANGELOG.md)
+* [0.1.6.1](https://github.com/MEnigma/flutter_rtmp/tree/v0.1.6.1)
 * [0.1.6](https://github.com/MEnigma/flutter_rtmp/tree/v0.1.6)
+* [0.1.4](https://github.com/MEnigma/flutter_rtmp/tree/v0.1.4)
+
