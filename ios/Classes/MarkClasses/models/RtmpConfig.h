@@ -12,8 +12,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, RtmpOrientation){
-    RtmpOrientationPortrait = 1,
-    RtmpOrientationLandspace = 2
+    RtmpOrientationPortrait = 0,
+    RtmpOrientationLandspace = 1
 };
 
 @class RtmpVideoConfig;
