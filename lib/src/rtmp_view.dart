@@ -54,6 +54,12 @@ class _RtmpViewState extends State<RtmpView> {
           }
         },
       );
+    }else if (Platform.isMacOS){
+
+      Future.delayed(Duration(seconds:1)).then((_){
+        widget.manager?.initConfig();
+      });
+      return Container();
     } else {
       if (widget.onCreated != null) {
         widget.onCreated();
