@@ -13,10 +13,6 @@ import 'package:flutter_rtmp/src/models.dart';
 import 'def.dart';
 
 class RtmpManager {
-  // static final RtmpManager2 _instance = RtmpManager2._();
-  // static RtmpManager2 get instance => _instance;
-  // factory RtmpManager2() => _instance;
-  // RtmpManager2._();
   RtmpManager({this.config});
 
   // method

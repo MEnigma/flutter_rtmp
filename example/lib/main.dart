@@ -15,13 +15,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   RtmpManager _manager;
-  int seconds = 0;
   Timer _timer;
+  int seconds = 0;
 
   @override
   void initState() {
     super.initState();
-    _manager = RtmpManager();
+    _manager = RtmpManager(config: RtmpConfig(debugmode: true));
   }
 
   startCount() {
@@ -53,9 +53,6 @@ class _MyAppState extends State<MyApp> {
                 child: Column(
                   children: [
                     Container(
-                        // height: 40,
-                        // color: Colors.white,
-                        // padding: EdgeInsets.only(top: 20),
                         alignment: Alignment.topLeft,
                         child: Flex(
                           direction: Axis.horizontal,

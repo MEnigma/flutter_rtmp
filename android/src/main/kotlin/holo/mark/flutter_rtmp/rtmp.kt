@@ -1,6 +1,5 @@
 package holo.mark.flutter_rtmp
 
-import android.app.*
 import android.content.*
 import android.content.res.*
 import android.hardware.camera2.*
@@ -63,7 +62,6 @@ class RtmpManagerV2 : AppCompatActivity(), MethodChannel.MethodCallHandler, SrsE
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
-        print(">> TTT ------------------------------------------------------------------------\n")
         val param: Map<String, Any>
         if (call.arguments != null) {
             @Suppress("UNCHECKED_CAST")
@@ -196,7 +194,8 @@ class RtmpManagerV2 : AppCompatActivity(), MethodChannel.MethodCallHandler, SrsE
     }
 
     private fun logat(message: String, param: Map<String, Any>) {
-        println(">> [Flutter RTMP] $message --> param : $param")
+        if (config.debugmode)
+            println(">> [Flutter RTMP] $message --> param : $param")
     }
 
     //--------------------------------------- LISTENER -----------------------------------------

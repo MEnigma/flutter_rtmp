@@ -27,18 +27,20 @@ class Response {
 
     private var result: MutableMap<String, Any> = mutableMapOf()
 
-    fun setValue(code: Int, succeed: Boolean, message: String, result: MutableMap<String, Any>) : Map<String,Any> {
+    fun setValue(code: Int, succeed: Boolean, message: String, result: MutableMap<String, Any>): Map<String, Any> {
         errorCode = code
         this.succeed = succeed
         this.message = message
         this.result = result
         return toJson()
     }
+
     @Deprecated("使用 setValue")
     fun succeessful(): MutableMap<String, Any> {
         succeed = true
         return toJson()
     }
+
     @Deprecated("使用 setValue")
     fun succeessfulWithCode(code: Int): MutableMap<String, Any> {
         succeed = true
@@ -68,15 +70,22 @@ class Response {
 
 /// 直播信息配置
 class RtmpConfig {
-
     var videoConfig: RtmpVideoConfig = RtmpVideoConfig()
     var audioConfig: RtmpAudioConfig = RtmpAudioConfig()
 
-    fun init(param: Map<String, Map<String, Any>?>?) {
+    // debug模式
+    var debugmode: Boolean = false
+    fun init(param: Map<String, Any?>?) {
         if (param == null) return
-        val vConfgi: Map<String, Any>? = param["videoConfig"] ?: mapOf()
+        var _inpConf: Any? = param["videoConfig"]
+        val vConfgi: Map<String, Any>?
+        if (_inpConf != null) {
+            vConfgi = _inpConf as Map<String, Any>?
+        } else {
+            vConfgi = mapOf()
+        }
         videoConfig.init(vConfgi)
-
+        debugmode = (param["debugmode"] ?: false) as Boolean
     }
 
 }

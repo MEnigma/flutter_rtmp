@@ -21,8 +21,9 @@ typedef NS_ENUM(NSInteger, RtmpOrientation){
 
 @interface RtmpConfig : NSObject
 
-@property(nonatomic,strong) RtmpVideoConfig *videoConfig;
-@property(nonatomic,strong) RtmpAudioConfig *audioConfig;
+@property (nonatomic,assign) bool debugmode;
+@property (nonatomic,strong) RtmpVideoConfig *videoConfig;
+@property (nonatomic,strong) RtmpAudioConfig *audioConfig;
 
 -(void)loadData:(NSDictionary *)data;
 

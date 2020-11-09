@@ -34,6 +34,13 @@
         result(FlutterMethodNotImplemented);
     }
 }
+
+-(void)logat:(NSString)method params:(id)argus{
+    if (self.config && self.config.debugmode){
+        NSLog(@">> [Flutter RTMP] %@ --> param : %@",method,argus);
+    }
+}
+
 #pragma mark 设置
 /// 设置url
 -(void)startLive:(NSDictionary *)param result:(FlutterResult )result{
@@ -41,7 +48,6 @@
     stream.url = param[@"url"];
     
     @try{
-        NSLog(@"--- startLive ---");
         [self.session startLive:stream];
         [self.snapshot loadSessionInf:self.session];
         if(result)result([Response make:true
@@ -65,7 +71,6 @@
         [self session];
         self.session.preView = preview;
     }
-    NSLog(@"--- init config ---");
     [self requestAccessForAudio];
     [self requestAccessForVideo];
     [self.snapshot loadSessionInf:self.session];

@@ -8,26 +8,36 @@
 import 'package:flutter/material.dart';
 
 class RtmpConfig {
-  RtmpVideoConfig videoConfig = RtmpVideoConfig();
-  RtmpAudioConfig audioConfig = RtmpAudioConfig();
+  RtmpConfig(
+      {this.debugmode = false,
+      this.audioConfig = const RtmpAudioConfig(),
+      this.videoConfig = const RtmpVideoConfig()});
+
+  final bool debugmode;
+  final RtmpVideoConfig videoConfig;
+  final RtmpAudioConfig audioConfig;
 
   Map toMap() {
-    return {"videoConfig": videoConfig.toMap()};
+    return {"videoConfig": videoConfig.toMap(), "debugmode": debugmode};
   }
 }
 
-/// 视频配置 
+/// 视频配置
 /// 暂未使用
 /// not used
 class RtmpVideoConfig {
+  const RtmpVideoConfig(
+      {this.autoRotate = false,
+      this.quality = 5,
+      this.orientation = Orientation.portrait});
   // 自动旋转
-  bool autoRotate = false;
+  final bool autoRotate; // = false;
 
   // 视频输出质量 0~8
-  int quality = 5;
+  final int quality;
 
   //竖屏
-  Orientation orientation = Orientation.portrait;
+  final Orientation orientation;
 
   Map toMap() {
     return {
@@ -37,19 +47,13 @@ class RtmpVideoConfig {
     };
   }
 
-  void rotate() {
-    if (orientation == Orientation.portrait) {
-      orientation = Orientation.landscape;
-    } else {
-      orientation = Orientation.portrait;
-    }
-  }
-
   /// 是否为横屏
   bool get isLandspace => orientation == Orientation.landscape;
 }
 
-class RtmpAudioConfig {}
+class RtmpAudioConfig {
+  const RtmpAudioConfig();
+}
 
 /// 结果信息
 class RtmpResponse {
