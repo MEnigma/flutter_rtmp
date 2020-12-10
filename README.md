@@ -5,14 +5,14 @@ Please use [`Github`](https://github.com/MEnigma/flutter_rtmp/tags) source;
 
 ```
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.12.0-0 <3.0.0"
   flutter: ">=1.10.0"
 ```
 
 ## 使用方法
 >   **git安装使用时建议要按照tag/release版本号**
 
-### [更新 0.1.6](https://github.com/MEnigma/flutter_rtmp/blob/master/CHANGELOG.md)
+### [更新 0.1.7-nullsafety](https://github.com/MEnigma/flutter_rtmp/blob/master/CHANGELOG.md)
 
 
 ### 引入
@@ -74,7 +74,7 @@ environment:
 
 ### Versions
 ##### [更新记录](https://github.com/MEnigma/flutter_rtmp/blob/master/CHANGELOG.md)
-* [0.1.7-nullsafety](https://github.com/MEnigma/flutter_rtmp/tree/v0.1.7-nullsafety)
+* [0.1.7-nullsafety](https://github.com/MEnigma/flutter_rtmp/tree/0.1.7-nullsafety)
 * [0.1.6.1](https://github.com/MEnigma/flutter_rtmp/tree/v0.1.6.1)
 * [0.1.6](https://github.com/MEnigma/flutter_rtmp/tree/v0.1.6)
 * [0.1.4](https://github.com/MEnigma/flutter_rtmp/tree/v0.1.4)
