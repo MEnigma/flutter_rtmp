@@ -71,6 +71,7 @@ environment:
 
 ### Versions
 ##### [更新记录](https://github.com/MEnigma/flutter_rtmp/blob/master/CHANGELOG.md)
+* [0.1.7-nullsafety](https://github.com/MEnigma/flutter_rtmp/tree/0.1.7-nullsafety)
 * [0.1.6.1](https://github.com/MEnigma/flutter_rtmp/tree/v0.1.6.1)
 * [0.1.6](https://github.com/MEnigma/flutter_rtmp/tree/v0.1.6)
 * [0.1.4](https://github.com/MEnigma/flutter_rtmp/tree/v0.1.4)
