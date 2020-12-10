@@ -1,5 +1,8 @@
 # flutter_rtmp
 
+
+Please use [`Github`](https://github.com/MEnigma/flutter_rtmp/tags) source;
+
 ```
 environment:
   sdk: ">=2.1.0 <3.0.0"
