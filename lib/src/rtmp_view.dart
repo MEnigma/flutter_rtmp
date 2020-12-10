@@ -17,9 +17,9 @@ import 'def.dart';
 class RtmpView extends StatefulWidget {
   RtmpView({@required this.manager, this.onCreated});
 
-  final RtmpManager manager;
+  final RtmpManager? manager;
 
-  final VoidCallback onCreated;
+  final VoidCallback? onCreated;
 
   @override
   _RtmpViewState createState() => _RtmpViewState();
@@ -38,9 +38,9 @@ class _RtmpViewState extends State<RtmpView> {
       return UiKitView(
         viewType: DEF_CAMERA_RTMP_VIEW,
         onPlatformViewCreated: (_) {
-            widget.manager?.initConfig();
+          widget.manager?.initConfig();
           if (widget.onCreated != null) {
-            widget.onCreated();
+            widget.onCreated!();
           }
         },
       );
@@ -48,15 +48,15 @@ class _RtmpViewState extends State<RtmpView> {
       return AndroidView(
         viewType: DEF_CAMERA_RTMP_VIEW,
         onPlatformViewCreated: (_) {
-            widget.manager?.initConfig();
+          widget.manager?.initConfig();
           if (widget.onCreated != null) {
-            widget.onCreated();
+            widget.onCreated!();
           }
         },
       );
     } else {
       if (widget.onCreated != null) {
-        widget.onCreated();
+        widget.onCreated!();
       }
       return Container();
     }

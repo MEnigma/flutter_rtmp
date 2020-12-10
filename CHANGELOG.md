@@ -48,3 +48,6 @@ class _MyAppState extends State<MyApp> {
 > ### 移除了permission_handler插件
 > ### 修改iOS屏幕旋转状态的初始值
 > ### 添加iOS端快照信息(快照信息目前有状态不同步的问题)
+
+## 0.1.7-nullsafety.0.
+> ### 添加空安全支持

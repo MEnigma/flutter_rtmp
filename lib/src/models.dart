@@ -59,14 +59,14 @@ class RtmpAudioConfig {
 class RtmpResponse {
   bool succeed = false;
   String message = "";
-  dynamic result;
-  Map oridata;
+  dynamic? result;
+  Map? oridata;
 
-  RtmpResponse.succeed({String msg}) {
+  RtmpResponse.succeed({String? msg}) {
     succeed = true;
     message = msg ?? "";
   }
-  RtmpResponse.faile({String msg}) {
+  RtmpResponse.faile({String? msg}) {
     succeed = false;
     message = msg ?? "";
   }
@@ -85,14 +85,14 @@ class RtmpSnapshot {
   // 是否拥有快照信息
   bool hasShot = false;
   // 当前尺寸
-  Size currentCtxSize;
+  Size? currentCtxSize;
   // 直播地址
-  String rtmpUrl;
+  String? rtmpUrl;
   // 直播状态
-  int status;
+  int? status;
 
-  RtmpSnapshot.fromData(Map data) {
-    if (0 == data.keys.length && data != null) {
+  RtmpSnapshot.fromData(Map? data) {
+    if (data != null && 0 == data.keys.length) {
       hasShot = true;
     }
     data ??= {};

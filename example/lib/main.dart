@@ -14,8 +14,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  RtmpManager _manager;
-  Timer _timer;
+  RtmpManager? _manager;
+  Timer? _timer;
   int seconds = 0;
 
   @override
@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
                                   String config = await rootBundle
                                       .loadString("src/testfile.json");
                                   Map param = jsonDecode(config);
-                                  await _manager
+                                  await _manager!
                                       .startLive(param["rtmpurl"] ?? "");
                                   setState(() {});
                                   startCount();
@@ -71,28 +71,28 @@ class _MyAppState extends State<MyApp> {
                             ActionChip(
                                 label: Text("暂停"),
                                 onPressed: () async {
-                                  await _manager.pauseLive();
+                                  await _manager!.pauseLive();
                                   setState(() {});
                                   stopCount();
                                 }),
                             ActionChip(
                                 label: Text("恢复"),
                                 onPressed: () async {
-                                  await _manager.resumeLive();
+                                  await _manager!.resumeLive();
                                   setState(() {});
                                   startCount();
                                 }),
                             ActionChip(
                                 label: Text("结束"),
                                 onPressed: () async {
-                                  await _manager.stopLive();
+                                  await _manager!.stopLive();
                                   setState(() {});
                                   stopCount();
                                 }),
                             ActionChip(
                                 label: Text("切换摄像头"),
                                 onPressed: () async {
-                                  await _manager.switchCamera();
+                                  await _manager!.switchCamera();
                                   setState(() {});
                                 }),
                           ],
@@ -102,7 +102,7 @@ class _MyAppState extends State<MyApp> {
                       child: RichText(
                           text: TextSpan(
                               text:
-                                  "快照信息 \n STATUS : ${_manager.snapShot?.status ?? 'NO'}\t\t",
+                                  "快照信息 \n STATUS : ${_manager!.snapShot?.status ?? 'NO'}\t\t",
                               children: [TextSpan(text: "sec : $seconds")])),
                     )
                   ],

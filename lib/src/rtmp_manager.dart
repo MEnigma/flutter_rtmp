@@ -19,10 +19,10 @@ class RtmpManager {
   final MethodChannel _methodChannel = MethodChannel(DEF_CAMERA_SETTING_CONFIG);
 
   // 配置信息
-  final RtmpConfig config;
+  final RtmpConfig? config;
 
-  RtmpSnapshot _rtmpSnapshot;
-  RtmpSnapshot get snapShot => _rtmpSnapshot;
+  RtmpSnapshot? _rtmpSnapshot;
+  RtmpSnapshot? get snapShot => _rtmpSnapshot;
 
   // 初始化配置信息
   // 会在 [onPlatformViewCreated] 中调用
@@ -76,7 +76,7 @@ class RtmpManager {
   }
 
   // 获取 直播快照
-  Future<RtmpSnapshot> updateSnapshot() async {
+  Future<RtmpSnapshot?> updateSnapshot() async {
     RtmpResponse result =
         RtmpResponse.fromData(await _methodChannel.invokeMethod("cameraRatio"));
     this._rtmpSnapshot = RtmpSnapshot.fromData(result.result);
