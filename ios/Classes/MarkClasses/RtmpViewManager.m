@@ -35,7 +35,7 @@
     }
 }
 
--(void)logat:(NSString)method params:(id)argus{
+-(void)logat:(NSString *)method params:(id)argus{
     if (self.config && self.config.debugmode){
         NSLog(@">> [Flutter RTMP] %@ --> param : %@",method,argus);
     }
