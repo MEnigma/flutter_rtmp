@@ -11,10 +11,10 @@ import io.flutter.plugin.common.*
 import io.flutter.plugin.platform.*
 import net.ossrs.yasea.*
 import java.io.*
-import java.lang.Exception
 import java.lang.IllegalArgumentException
 import java.lang.IllegalStateException
 import java.net.*
+import kotlin.Exception
 
 
 class RtmpPreviewFactory(rtmpManagerV2: RtmpManagerV2) : PlatformViewFactory(StandardMessageCodec()) {
@@ -164,17 +164,47 @@ class RtmpManagerV2 : AppCompatActivity(), MethodChannel.MethodCallHandler, SrsE
         } catch (e: Exception) {
             numOfCamera = 2
             errmsg = e.toString()
+            result.success(Response().setValue(ErrCode.UnKnown, false, errmsg, loger.toMap()))
+            return
         }
-        val nextCameraId: Int = (pusher?.cameraId ?: 0) + 1
-        pusher?.switchCameraFace(nextCameraId % numOfCamera)
-        result.success(Response().setValue(ErrCode.None, true, errmsg, loger.toMap()))
+        // no cameras
+        if (numOfCamera == 0) {
+            result.success(Response().setValue(ErrCode.UnKnown, false, "no cameras", loger.toMap()))
+            return
+        }
+        /// 当前偏移位置
+        var indexOffset: Int = (pusher?.cameraId ?: 0)
+        var scrollOffset: Int = 0
+        var finded: Boolean = false
+        while (scrollOffset < numOfCamera) {
+            scrollOffset++
+            var candidateID: Int = (scrollOffset + indexOffset) % numOfCamera
+            try {
+                pusher?.switchCameraFace(candidateID)
+                finded = true
+                break
+            } catch (e: Exception) {
+                errmsg = e.toString()
+            }
+        }
+        if (finded) {
+            result.success(Response().setValue(ErrCode.None, true, errmsg, loger.toMap()))
+        } else {
+            result.success(Response().setValue(ErrCode.None, false, errmsg, loger.toMap()))
+        }
     }
 
     private fun pauseLive(param: Map<String, Any>, result: MethodChannel.Result) {
         if (loger.rtmpInPushing()) {
-            pusher?.stopPublish()
-            pusher?.startCamera()
-            result.success(Response().setValue(ErrCode.None, true, "ok", loger.toMap()))
+            try {
+
+                pusher?.stopPublish()
+                pusher?.startCamera()
+                result.success(Response().setValue(ErrCode.None, true, "ok", loger.toMap()))
+            } catch (e: Exception) {
+                result.success(Response().setValue(ErrCode.None, false, e.toString(), loger.toMap()))
+
+            }
         } else {
             result.success(Response().setValue(ErrCode.RepeatOperation, false, "", loger.toMap()))
         }

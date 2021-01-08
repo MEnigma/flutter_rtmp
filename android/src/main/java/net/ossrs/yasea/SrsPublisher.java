@@ -4,6 +4,7 @@ import android.hardware.Camera;
 import android.media.AudioRecord;
 import android.media.audiofx.AcousticEchoCanceler;
 import android.media.audiofx.AutomaticGainControl;
+import android.util.Log;
 
 import com.github.faucamp.simplertmp.RtmpHandler;
 import com.seu.magicfilter.utils.MagicFilterType;
@@ -103,9 +104,15 @@ public class SrsPublisher {
                             break;
                         }
                     } else {
-                        int size = mic.read(mPcmBuffer, 0, mPcmBuffer.length);
-                        if (size > 0) {
-                            mEncoder.onGetPcmFrame(mPcmBuffer, size);
+                        try {
+
+                            int size = mic.read(mPcmBuffer, 0, mPcmBuffer.length);
+                            if (size > 0) {
+                                mEncoder.onGetPcmFrame(mPcmBuffer, size);
+                            }
+                        } catch (Exception e) {
+                            Log.i("srs", e.toString());
+                            break;
                         }
                     }
                 }
@@ -160,11 +167,13 @@ public class SrsPublisher {
         stopCamera();
         mEncoder.stop();
     }
-    public void pauseEncode(){
+
+    public void pauseEncode() {
         stopAudio();
         mCameraView.disableEncoding();
         mCameraView.stopTorch();
     }
+
     private void resumeEncode() {
         startAudio();
         mCameraView.enableEncoding();
@@ -177,8 +186,9 @@ public class SrsPublisher {
             startEncode();
         }
     }
-    public void resumePublish(){
-        if(mFlvMuxer != null) {
+
+    public void resumePublish() {
+        if (mFlvMuxer != null) {
             mEncoder.resume();
             resumeEncode();
         }
@@ -191,12 +201,13 @@ public class SrsPublisher {
         }
     }
 
-    public void pausePublish(){
+    public void pausePublish() {
         if (mFlvMuxer != null) {
             mEncoder.pause();
             pauseEncode();
         }
     }
+
     public boolean startRecord(String recPath) {
         return mMp4Muxer != null && mMp4Muxer.record(new File(recPath));
     }
@@ -219,12 +230,12 @@ public class SrsPublisher {
         }
     }
 
-    public boolean isAllFramesUploaded(){
+    public boolean isAllFramesUploaded() {
         return mFlvMuxer.getVideoFrameCacheNumber().get() == 0;
     }
 
-    public int getVideoFrameCacheCount(){
-        if(mFlvMuxer != null) {
+    public int getVideoFrameCacheCount() {
+        if (mFlvMuxer != null) {
             return mFlvMuxer.getVideoFrameCacheNumber().get();
         }
         return 0;
@@ -257,10 +268,10 @@ public class SrsPublisher {
     public int getCameraId() {
         return mCameraView.getCameraId();
     }
-    
+
     public Camera getCamera() {
         return mCameraView.getCamera();
-    }     
+    }
 
     public void setPreviewResolution(int width, int height) {
         int resolution[] = mCameraView.setPreviewResolution(width, height);

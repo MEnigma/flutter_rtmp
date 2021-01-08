@@ -7,42 +7,66 @@ packages:
       name: async
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "2.5.0-nullsafety.3"
+=======
+    version: "2.5.0-nullsafety.2"
+>>>>>>> master
   boolean_selector:
     dependency: transitive
     description:
       name: boolean_selector
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "2.1.0-nullsafety.3"
+=======
+    version: "2.1.0-nullsafety.2"
+>>>>>>> master
   characters:
     dependency: transitive
     description:
       name: characters
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "1.1.0-nullsafety.5"
+=======
+    version: "1.1.0-nullsafety.4"
+>>>>>>> master
   charcode:
     dependency: transitive
     description:
       name: charcode
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "1.2.0-nullsafety.3"
+=======
+    version: "1.2.0-nullsafety.2"
+>>>>>>> master
   clock:
     dependency: transitive
     description:
       name: clock
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "1.1.0-nullsafety.3"
+=======
+    version: "1.1.0-nullsafety.2"
+>>>>>>> master
   collection:
     dependency: transitive
     description:
       name: collection
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "1.15.0-nullsafety.5"
+=======
+    version: "1.15.0-nullsafety.4"
+>>>>>>> master
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -56,7 +80,11 @@ packages:
       name: fake_async
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "1.2.0-nullsafety.3"
+=======
+    version: "1.2.0-nullsafety.2"
+>>>>>>> master
   flutter:
     dependency: "direct main"
     description: flutter
@@ -80,21 +108,33 @@ packages:
       name: matcher
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "0.12.10-nullsafety.3"
+=======
+    version: "0.12.10-nullsafety.2"
+>>>>>>> master
   meta:
     dependency: transitive
     description:
       name: meta
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "1.3.0-nullsafety.6"
+=======
+    version: "1.3.0-nullsafety.5"
+>>>>>>> master
   path:
     dependency: transitive
     description:
       name: path
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "1.8.0-nullsafety.3"
+=======
+    version: "1.8.0-nullsafety.2"
+>>>>>>> master
   sky_engine:
     dependency: transitive
     description: flutter
@@ -106,56 +146,91 @@ packages:
       name: source_span
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "1.8.0-nullsafety.4"
+=======
+    version: "1.8.0-nullsafety.3"
+>>>>>>> master
   stack_trace:
     dependency: transitive
     description:
       name: stack_trace
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "1.10.0-nullsafety.6"
+=======
+    version: "1.10.0-nullsafety.5"
+>>>>>>> master
   stream_channel:
     dependency: transitive
     description:
       name: stream_channel
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "2.1.0-nullsafety.3"
+=======
+    version: "2.1.0-nullsafety.2"
+>>>>>>> master
   string_scanner:
     dependency: transitive
     description:
       name: string_scanner
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "1.1.0-nullsafety.3"
+=======
+    version: "1.1.0-nullsafety.2"
+>>>>>>> master
   term_glyph:
     dependency: transitive
     description:
       name: term_glyph
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "1.2.0-nullsafety.3"
+=======
+    version: "1.2.0-nullsafety.2"
+>>>>>>> master
   test_api:
     dependency: transitive
     description:
       name: test_api
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "0.2.19-nullsafety.6"
+=======
+    version: "0.2.19-nullsafety.4"
+>>>>>>> master
   typed_data:
     dependency: transitive
     description:
       name: typed_data
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "1.3.0-nullsafety.5"
+=======
+    version: "1.3.0-nullsafety.4"
+>>>>>>> master
   vector_math:
     dependency: transitive
     description:
       name: vector_math
       url: "https://pub.flutter-io.cn"
     source: hosted
+<<<<<<< HEAD
     version: "2.1.0-nullsafety.5"
 sdks:
   dart: ">=2.12.0-0.0 <3.0.0"
   flutter: ">=1.20.0"
+=======
+    version: "2.1.0-nullsafety.4"
+sdks:
+  dart: ">=2.11.0-0.0 <=2.12.0-15.0.dev"
+  flutter: ">=1.10.0"
+>>>>>>> master

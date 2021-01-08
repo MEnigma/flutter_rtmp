@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"info":"This is a generated file; do not edit or check into version control.","plugins":{"ios":[{"name":"flutter_rtmp","path":"/Users/apple/Desktop/lib/flutter_rtmp/","dependencies":[]}],"android":[{"name":"flutter_rtmp","path":"/Users/apple/Desktop/lib/flutter_rtmp/","dependencies":[]}],"macos":[],"linux":[],"windows":[],"web":[]},"dependencyGraph":[{"name":"flutter_rtmp","dependencies":[]}],"date_created":"2020-12-10 17:43:04.236874","version":"1.24.0-10.2.pre"}
+=======
+{"info":"This is a generated file; do not edit or check into version control.","plugins":{"ios":[{"name":"flutter_rtmp","path":"/Users/apple/Desktop/lib/flutter_rtmp/","dependencies":[]}],"android":[{"name":"flutter_rtmp","path":"/Users/apple/Desktop/lib/flutter_rtmp/","dependencies":[]}],"macos":[],"linux":[],"windows":[],"web":[]},"dependencyGraph":[{"name":"flutter_rtmp","dependencies":[]}],"date_created":"2021-01-08 14:00:53.712674","version":"1.24.0-8.0.pre.63"}
+>>>>>>> master
