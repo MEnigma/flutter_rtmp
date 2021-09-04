@@ -154,14 +154,11 @@
 -(void)switchCamera:(NSDictionary *)param result:(FlutterResult)result{
     if (self.session) {
         @try {
-            LFLiveState oriState = self.session.state;
-            if (oriState == LFLiveStart) [self.session stopLive];
             if(self.session.captureDevicePosition == AVCaptureDevicePositionBack){
                 [self.session setCaptureDevicePosition:AVCaptureDevicePositionFront];
             }else{
                 [self.session setCaptureDevicePosition:AVCaptureDevicePositionBack];
             }
-            if (oriState == LFLiveStart) [self.session startLive:self.session.streamInfo];
             [self.snapshot loadSessionInf:self.session];
             if(result)
                 result([Response make:true
